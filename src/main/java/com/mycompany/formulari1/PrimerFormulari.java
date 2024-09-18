@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package Practica1;
+package com.mycompany.formulari1;
 
 /**
  *
- * @author 6003171
+ * @author berta
  */
-public class Interficies {
+public class PrimerFormulari {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        new Formulari().setVisible(true);
     }
 }
