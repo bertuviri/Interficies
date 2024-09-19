@@ -4,6 +4,9 @@
  */
 package Practica1;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -300,7 +303,17 @@ public class Calculadora extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /*
+    
+    - Operaciones con numeros negativos en general (desde inicio), tanto en el operando1 como en el operando2
+    - Que salte error cuando por pantalla cuando se quieren poner signos antes del 1r numero (excepto el negativo)
+    - Que no salte error y que no haga nada cuando quieras poner dos signos seguidos
+    - Que no deje poner comas si no hay algun numero delante
+    
+    */
+    
+    
     private void jButtonUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnoActionPerformed
         resultado.setText(resultado.getText() + String.valueOf(1));
     }//GEN-LAST:event_jButtonUnoActionPerformed
@@ -357,13 +370,14 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton0ActionPerformed
 
     private void jButtonIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIgualActionPerformed
+        
         if (resultado.getText().contains("+")){
             String[] partes = resultado.getText().split("\\+");
             double operando1 = Double.parseDouble(partes[0]);
             double operando2 = Double.parseDouble(partes[1]);
             
             double suma = operando1 + operando2;
-            resultado.setText(Double.toString(suma));  
+            resultado.setText(Double.toString(redondear(suma)));  
         }  
         
         else if (resultado.getText().contains("*")){
@@ -372,7 +386,7 @@ public class Calculadora extends javax.swing.JFrame {
             double operando2 = Double.parseDouble(partes[1]);
             
             double multiplicacion = operando1 * operando2;
-            resultado.setText(Double.toString(multiplicacion));
+            resultado.setText(Double.toString(redondear(multiplicacion)));
         } 
         
         else if (resultado.getText().contains("/")){
@@ -381,7 +395,7 @@ public class Calculadora extends javax.swing.JFrame {
             double operando2 = Double.parseDouble(partes[1]);
             
             double division = operando1 / operando2;
-            resultado.setText(Double.toString(division));
+            resultado.setText(Double.toString(redondear(division)));
         }
         
         else if (resultado.getText().contains("-")){
@@ -390,7 +404,7 @@ public class Calculadora extends javax.swing.JFrame {
             double operando2 = Double.parseDouble(partes[1]);
             
             double resta = operando1 - operando2;
-            resultado.setText(Double.toString(resta));
+            resultado.setText(Double.toString(redondear(resta)));
         }
     }//GEN-LAST:event_jButtonIgualActionPerformed
 
@@ -413,10 +427,15 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDivisionActionPerformed
 
     private void jButtonComaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComaActionPerformed
-        // TODO add your handling code here:
-        // TODO poner lo de la coma 
+       resultado.setText(resultado.getText() + ".");
     }//GEN-LAST:event_jButtonComaActionPerformed
+    
+    private double redondear(double operacion){
+        BigDecimal bd = new BigDecimal(operacion);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);  // Redondeo a 2 decimales
 
+        return bd.doubleValue();
+    }
     /**
      * @param args the command line arguments
      */
