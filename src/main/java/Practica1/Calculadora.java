@@ -305,12 +305,13 @@ public class Calculadora extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     /*
+
+    - (Largo de hacer) --> Que no se puedan poner 2 comas en un operando. Ej: 0.3.
+    - Mirar posibles errores con la division para tenerlos en cuenta
     
-    - Operaciones con numeros negativos en general (desde inicio), tanto en el operando1 como en el operando2
-    - Que salte error cuando por pantalla cuando se quieren poner signos antes del 1r numero (excepto el negativo)
-    - Que no salte error y que no haga nada cuando quieras poner dos signos seguidos
-    - Que no deje poner comas si no hay algun numero delante
-    
+    EXTRA (que no voy a hacer):
+    - Tras hacer el = (al hacer la operacion), que si se pone un numero, lo borre todo y ponga el numero nuevo
+    (Largo?) Operaciones con numeros negativos en general (desde inicio y cuando recibimos un numero negativo tras el =), tanto en el operando1 como en el operando2
     */
     
     
@@ -351,18 +352,49 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNueveActionPerformed
 
     private void jButtonSumarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSumarActionPerformed
-        jButtonIgualActionPerformed(evt);
-        resultado.setText(resultado.getText() + "+");
+        if (resultado.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error! No se puede comenzar con este caracter." , "Error" , JOptionPane.ERROR_MESSAGE);
+        } else {
+            char[] caracteres = resultado.getText().toCharArray();
+            char ultimoCaracter = caracteres[caracteres.length -1];
+            
+            if (Character.isDigit(ultimoCaracter)){
+                jButtonIgualActionPerformed(evt);
+                resultado.setText(resultado.getText() + "+");
+            }
+        }
     }//GEN-LAST:event_jButtonSumarActionPerformed
 
     private void jButtonRestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestarActionPerformed
-        jButtonIgualActionPerformed(evt);
-        resultado.setText(resultado.getText() + "-");
+        if (resultado.getText().isEmpty()){
+            
+            jButtonIgualActionPerformed(evt);
+            resultado.setText(resultado.getText() + "-");
+            
+        } else {
+        
+            char[] caracteres = resultado.getText().toCharArray();
+            char ultimoCaracter = caracteres[caracteres.length -1];
+
+            if (Character.isDigit(ultimoCaracter)){
+                jButtonIgualActionPerformed(evt);
+                resultado.setText(resultado.getText() + "-");
+            }
+        }
     }//GEN-LAST:event_jButtonRestarActionPerformed
 
     private void jButtonMultiplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMultiplicarActionPerformed
-        jButtonIgualActionPerformed(evt);
-        resultado.setText(resultado.getText() + "*");
+        if (resultado.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error! No se puede comenzar con este caracter." , "Error" , JOptionPane.ERROR_MESSAGE);
+        } else {
+            char[] caracteres = resultado.getText().toCharArray();
+            char ultimoCaracter = caracteres[caracteres.length -1];
+            
+            if (Character.isDigit(ultimoCaracter)){
+                jButtonIgualActionPerformed(evt);
+                resultado.setText(resultado.getText() + "*");
+            }
+        }
     }//GEN-LAST:event_jButtonMultiplicarActionPerformed
 
     private void jButton0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton0ActionPerformed
@@ -422,12 +454,31 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDActionPerformed
 
     private void jButtonDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDivisionActionPerformed
-        jButtonIgualActionPerformed(evt);
-        resultado.setText(resultado.getText() + "/");
+        if (resultado.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error! No se puede comenzar con este caracter." , "Error" , JOptionPane.ERROR_MESSAGE);
+        } else {
+            char[] caracteres = resultado.getText().toCharArray();
+            char ultimoCaracter = caracteres[caracteres.length -1];
+            
+            if (Character.isDigit(ultimoCaracter)){
+                jButtonIgualActionPerformed(evt);
+                resultado.setText(resultado.getText() + "/");
+            }
+        }
     }//GEN-LAST:event_jButtonDivisionActionPerformed
 
     private void jButtonComaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComaActionPerformed
-       resultado.setText(resultado.getText() + ".");
+       
+       if (resultado.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error! No se puede comenzar con este caracter." , "Error" , JOptionPane.ERROR_MESSAGE);
+        } else {
+            char[] caracteres = resultado.getText().toCharArray();
+            char ultimoCaracter = caracteres[caracteres.length -1];
+            
+            if (Character.isDigit(ultimoCaracter)){
+                resultado.setText(resultado.getText() + ".");
+            }
+        }
     }//GEN-LAST:event_jButtonComaActionPerformed
     
     private double redondear(double operacion){
@@ -436,6 +487,15 @@ public class Calculadora extends javax.swing.JFrame {
 
         return bd.doubleValue();
     }
+    
+    private void dosSignosSeguidos (String resultado){
+        char[] caracteres = resultado.toCharArray();
+        char ultimoCaracter = caracteres[caracteres.length -1];
+        if (Character.isDigit(ultimoCaracter)){
+            
+        }
+    }
+   
     /**
      * @param args the command line arguments
      */
